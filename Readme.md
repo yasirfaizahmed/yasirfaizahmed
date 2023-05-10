@@ -1,6 +1,6 @@
 # Salam♡, Im Yasir
 
-I'm an Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
+Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
 
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)
