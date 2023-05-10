@@ -1,22 +1,13 @@
-# Yasir
+# Salam♡, Im Yasir
 
-I'm an Automation Engineer with expertise in Python. I have experience working with Android Automation and have contributed to various open-source projects.
+I'm an Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
 
-<!-- ![Yasir's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=yasirfaizahmed) -->
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)
 
 ![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs)
 
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
-
-[![Spotify](https://github-readme-remake.vercel.app/api/spotify)](https://open.spotify.com/user/31ttokkvyjosmekcpufcqhsuurmi)
-
-
-## Projects
-
-- [Twitter Automation](https://github.com/yasirfaizahmed/twitter_automation): Twitter automation framework using Python, Selenium, CV2, PyAutoGUI, and OpenAI GPT for tweeting, retweeting, liking, and commenting.
-- [AI speech assistant](https://github.com/yasirfaizahmed/AI_speech_assistant): Voice Assistant using OpenAI's GPT technology with Google Cloud Speech API to convert speech to text and vice versa. It provides accurate results using advanced NLP and ML techniques.
-- [nRF24l01-driver-for-stm32f103C8](https://github.com/yasirfaizahmed/nRF24l01-driver-for-stm32f103C8): Custom nRF24L01 transceiver module driver for a stm32f103 target device
 
 ## Skills
 
@@ -29,6 +20,17 @@ I'm an Automation Engineer with expertise in Python. I have experience working w
 <br />
 <br />
 
+
+## Projects
+
+- [Twitter Automation](https://github.com/yasirfaizahmed/twitter_automation): Twitter automation framework using Python, Selenium, CV2, PyAutoGUI, and OpenAI GPT for tweeting, retweeting, liking, and commenting.
+- [AI speech assistant](https://github.com/yasirfaizahmed/AI_speech_assistant): Voice Assistant using OpenAI's GPT technology with Google Cloud Speech API to convert speech to text and vice versa. It provides accurate results using advanced NLP and ML techniques.
+- [nRF24l01-driver-for-stm32f103C8](https://github.com/yasirfaizahmed/nRF24l01-driver-for-stm32f103C8): Custom nRF24L01 transceiver module driver for a stm32f103 target device
+
+
+## I'm enjoying listening to...
+
+![](https://spotify-github-profile.vercel.app/api/view.svg?uid=31ttokkvyjosmekcpufcqhsuurmi&cover_image=true&theme=default&show_offline=true&background_color=121212&interchange=true)
 
 ## Contact Me
 
