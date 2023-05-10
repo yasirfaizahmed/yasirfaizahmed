@@ -1,6 +1,16 @@
-# Hi, I'm Yasir
+# Yasir
 
 I'm an Automation Engineer with expertise in Python. I have experience working with Android Automation and have contributed to various open-source projects.
+
+
+<!-- ![Yasir's wakatime stats](https://github-readme-stats.vercel.app/api/wakatime?username=yasirfaizahmed) -->
+
+![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs)
+
+<!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
+
+[![Spotify](https://github-readme-remake.vercel.app/api/spotify)](https://open.spotify.com/user/31ttokkvyjosmekcpufcqhsuurmi)
+
 
 ## Projects
 
@@ -19,12 +29,6 @@ I'm an Automation Engineer with expertise in Python. I have experience working w
 <br />
 <br />
 
-
-[![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true)](https://github.com/anuraghazra/github-readme-stats)
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)](https://github.com/anuraghazra/github-readme-stats)
-
-[![Spotify](https://github-readme-remake.vercel.app/api/spotify)](https://open.spotify.com/user/31ttokkvyjosmekcpufcqhsuurmi)
 
 ## Contact Me
 
