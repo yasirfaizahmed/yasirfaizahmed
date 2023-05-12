@@ -1,4 +1,6 @@
-# Greetings, I'm Yasir
+<!-- # [![Typing SVG](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;Automation+Engineer&multiline=true&color=74DA0E)](https://git.io/typing-svg) -->
+![](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;&pause=2000&multiline=true&color=74DA0E&duration=2000&size=30&height=50&width=600&repeat=false)
+
 
 Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
