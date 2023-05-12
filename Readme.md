@@ -1,4 +1,4 @@
-# Salam♡, Im Yasir
+# Greetings, I'm Yasir
 
 Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
