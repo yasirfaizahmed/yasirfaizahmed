@@ -28,6 +28,7 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 - [Twitter Automation](https://github.com/yasirfaizahmed/twitter_automation): Twitter automation framework using Python, Selenium, CV2, PyAutoGUI, and OpenAI GPT for tweeting, retweeting, liking, and commenting.
 - [AI speech assistant](https://github.com/yasirfaizahmed/AI_speech_assistant): Voice Assistant using OpenAI's GPT technology with Google Cloud Speech API to convert speech to text and vice versa. It provides accurate results using advanced NLP and ML techniques.
 - [nRF24l01-driver-for-stm32f103C8](https://github.com/yasirfaizahmed/nRF24l01-driver-for-stm32f103C8): Custom nRF24L01 transceiver module driver for a stm32f103 target device
+- [Bare-metal-stm32-repository](https://github.com/yasirfaizahmed/Bare-metal-stm32-repository): Custom driver development for STM32F103 without using HAL libraries. Fully documented and tested code for microcontroller programming enthusiasts.
 
 
 ## I'm enjoying listening to...
