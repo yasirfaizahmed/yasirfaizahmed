@@ -7,7 +7,7 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)
 
-![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs)
+![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs&count_private=true)
 
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
 
