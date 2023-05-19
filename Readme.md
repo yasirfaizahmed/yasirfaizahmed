@@ -5,9 +5,9 @@
 Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
 
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)        ![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs&count_private=true)
 
-![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&show_icons=true&theme=merko&include_all_commits=true&hide=issues,contribs&count_private=true)
+
 
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
 
