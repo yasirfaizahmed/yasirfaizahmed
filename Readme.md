@@ -1,8 +1,8 @@
 <!-- # [![Typing SVG](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;Automation+Engineer&multiline=true&color=74DA0E)](https://git.io/typing-svg) -->
-![](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;&pause=10000&multiline=true&color=74DA0E&duration=2000&size=30&height=50&width=600&)
+![](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;&pause=10000&multiline=true&color=74DA0E&duration=2000&size=30&height=50&width=600&) 
 
+Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.  [![wakatime](https://wakatime.com/badge/user/a9e00d41-03d8-4310-b678-7bcc046966dc.svg)](https://wakatime.com/@a9e00d41-03d8-4310-b678-7bcc046966dc)
 
-Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.
 
 
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed&langs_count=10&hide_progress=true&theme=merko)        ![Yasir's GitHub stats](https://github-readme-stats.vercel.app/api?username=yasirfaizahmed&theme=merko&include_all_commits=true
