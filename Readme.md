@@ -17,7 +17,7 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 
 <a href="https://www.python.org" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/python-5.svg"/> </a>
 <a href="https://git-scm.com/" target="_blank"> <img align="left" alt="git" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/Git-Icon-1788C.png"/> </a>
-<a href="https://github.com/" target="_blank"> <img align="left" alt="git" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/github.svg"/> </a>
+<a href="https://github.com/" target="_blank"> <img align="left" alt="git" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/khjk.png"/> </a>
 <a href="https://www.docker.com/" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/919853.png"/> </a>
 <a href="https://www.cprogramming.com/" target="_blank"> <img align="left" alt="C" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/512px-Icon_C_orange.svg.png"/> </a>
 <a href="https://docs.kernel.org/" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/6124995.png"/> </a>
