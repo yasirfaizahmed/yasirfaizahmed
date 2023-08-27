@@ -13,6 +13,9 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
 
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
+
 ## Skills
 
 <a href="https://www.python.org" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/python-5.svg"/> </a>
