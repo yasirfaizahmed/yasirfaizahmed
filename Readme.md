@@ -16,7 +16,7 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 <!--START_SECTION:waka-->
 ![Code Time](http://img.shields.io/badge/Code%20Time-77%20hrs%2045%20mins-blue)
 
-![Profile Views](http://img.shields.io/badge/Profile%20Views-299-blue)
+![Profile Views](http://img.shields.io/badge/Profile%20Views-242-blue)
 
 ![Lines of code](https://img.shields.io/badge/From%20Hello%20World%20I%27ve%20Written-128.6%20thousand%20lines%20of%20code-blue)
 
@@ -73,7 +73,7 @@ Shell                    1 repo              █░░░░░░░░░░�
 
 
 
- Last Updated on 29/08/2023 18:36:06 UTC
+ Last Updated on 30/08/2023 18:36:27 UTC
 <!--END_SECTION:waka-->
 
 ## Skills
