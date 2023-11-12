@@ -1,7 +1,7 @@
 <!-- # [![Typing SVG](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;Automation+Engineer&multiline=true&color=74DA0E)](https://git.io/typing-svg) -->
 ![](https://readme-typing-svg.demolab.com/?lines=Yasir+Faiz+Ahmed;&pause=10000&multiline=true&color=33C1FF&duration=2000&size=30&height=50&width=600&) 
 
-Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.  [![wakatime](https://wakatime.com/badge/user/a9e00d41-03d8-4310-b678-7bcc046966dc.svg)](https://wakatime.com/@a9e00d41-03d8-4310-b678-7bcc046966dc)
+Automation Engineer with Bachelors in Electronics and Communication Engineering. I have experience working with Android Automation and have contributed to various open-source projects.  <!--[![wakatime](https://wakatime.com/badge/user/a9e00d41-03d8-4310-b678-7bcc046966dc.svg)](https://wakatime.com/@a9e00d41-03d8-4310-b678-7bcc046966dc)-->
 
 
 
@@ -14,11 +14,11 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yasirfaizahmed)] -->
 
 <!--START_SECTION:waka-->
-![Code Time](http://img.shields.io/badge/Code%20Time-81%20hrs-blue)
+<!--![Code Time](http://img.shields.io/badge/Code%20Time-81%20hrs-blue)
 
 ![Profile Views](http://img.shields.io/badge/Profile%20Views-0-blue)
 
-![Lines of code](https://img.shields.io/badge/From%20Hello%20World%20I%27ve%20Written-169.5%20thousand%20lines%20of%20code-blue)
+![Lines of code](https://img.shields.io/badge/From%20Hello%20World%20I%27ve%20Written-169.5%20thousand%20lines%20of%20code-blue)-->
 
 
  Last Updated on 23/09/2023 18:35:55 UTC
@@ -53,7 +53,6 @@ Automation Engineer with Bachelors in Electronics and Communication Engineering.
 ## Contact Me
 
 - Email: [yasirfaizahmed.n@gmail.com](yasirfaizahmed.n@gmail.com)
-- Twitter: [@YasirFaizAhmed](https://twitter.com/YasirFaizAhmed)
 
 
 
