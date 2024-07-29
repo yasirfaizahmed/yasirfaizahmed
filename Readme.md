@@ -23,7 +23,7 @@
 
  Last Updated on 23/09/2023 18:35:55 UTC
 <!--END_SECTION:waka-->
-
+<!--
 ## Skills
 
 <a href="https://www.python.org" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/python-5.svg"/> </a>
@@ -34,7 +34,7 @@
 <a href="https://docs.kernel.org/" target="_blank"> <img align="left" alt="Python" width="26px" src="https://github.com/yasirfaizahmed/yasirfaizahmed/blob/main/icons/6124995.png"/> </a>
 <br />
 <br />
-
+ -->
 
 
 
