@@ -44,9 +44,6 @@
 
 ![](https://spotify-recently-played-readme.vercel.app/api?user=31ttokkvyjosmekcpufcqhsuurmi&count=1)
 
-## Contact Me
-
-- Email: [yasirfaizahmed.n@gmail.com](yasirfaizahmed.n@gmail.com)
 
 
 
