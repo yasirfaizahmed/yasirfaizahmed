@@ -38,11 +38,6 @@
 
 
 
-## I'm enjoying listening to...
-
-![](https://spotify-github-profile.vercel.app/api/view.svg?uid=31ttokkvyjosmekcpufcqhsuurmi&cover_image=true&theme=default&show_offline=true&background_color=121212&interchange=true)
-
-![](https://spotify-recently-played-readme.vercel.app/api?user=31ttokkvyjosmekcpufcqhsuurmi&count=1)
 
 
 
