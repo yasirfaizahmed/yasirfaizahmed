@@ -102,6 +102,157 @@ function slugify(text) {
     .replace(/-+/g, "-");
 }
 
+function escapeHtml(text) {
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function renderInlineMarkdown(text) {
+  let html = escapeHtml(text);
+
+  html = html.replace(
+    /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<img src="$2" alt="$1" loading="lazy" referrerpolicy="no-referrer" />'
+  );
+  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  html = html.replace(/_([^_]+)_/g, "<em>$1</em>");
+  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  return html;
+}
+
+function markdownToHtml(markdownText) {
+  const text = String(markdownText || "").replace(/\r\n/g, "\n");
+  if (!text.trim()) return "";
+
+  const lines = text.split("\n");
+  const blocks = [];
+  let inUl = false;
+  let inOl = false;
+  let inCode = false;
+  let codeLines = [];
+  let paragraphLines = [];
+
+  const flushParagraph = () => {
+    if (paragraphLines.length === 0) return;
+    const merged = paragraphLines.join(" ").trim();
+    if (merged) {
+      blocks.push(`<p>${renderInlineMarkdown(merged)}</p>`);
+    }
+    paragraphLines = [];
+  };
+
+  const closeLists = () => {
+    if (inUl) {
+      blocks.push("</ul>");
+      inUl = false;
+    }
+    if (inOl) {
+      blocks.push("</ol>");
+      inOl = false;
+    }
+  };
+
+  const closeOpenBlocks = () => {
+    flushParagraph();
+    closeLists();
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (inCode) {
+      if (/^```/.test(line)) {
+        blocks.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+        codeLines = [];
+        inCode = false;
+      } else {
+        codeLines.push(rawLine);
+      }
+      continue;
+    }
+
+    if (/^```/.test(line)) {
+      closeOpenBlocks();
+      inCode = true;
+      codeLines = [];
+      continue;
+    }
+
+    if (!line) {
+      closeOpenBlocks();
+      continue;
+    }
+
+    if (/^---+$/.test(line)) {
+      closeOpenBlocks();
+      blocks.push("<hr />");
+      continue;
+    }
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
+    if (headingMatch) {
+      closeOpenBlocks();
+      const level = headingMatch[1].length;
+      blocks.push(`<h${level}>${renderInlineMarkdown(headingMatch[2])}</h${level}>`);
+      continue;
+    }
+
+    const quoteMatch = line.match(/^>\s?(.*)$/);
+    if (quoteMatch) {
+      closeOpenBlocks();
+      blocks.push(`<blockquote><p>${renderInlineMarkdown(quoteMatch[1])}</p></blockquote>`);
+      continue;
+    }
+
+    const ulMatch = line.match(/^[-*+]\s+(.*)$/);
+    if (ulMatch) {
+      flushParagraph();
+      if (inOl) {
+        blocks.push("</ol>");
+        inOl = false;
+      }
+      if (!inUl) {
+        blocks.push("<ul>");
+        inUl = true;
+      }
+      blocks.push(`<li>${renderInlineMarkdown(ulMatch[1])}</li>`);
+      continue;
+    }
+
+    const olMatch = line.match(/^\d+\.\s+(.*)$/);
+    if (olMatch) {
+      flushParagraph();
+      if (inUl) {
+        blocks.push("</ul>");
+        inUl = false;
+      }
+      if (!inOl) {
+        blocks.push("<ol>");
+        inOl = true;
+      }
+      blocks.push(`<li>${renderInlineMarkdown(olMatch[1])}</li>`);
+      continue;
+    }
+
+    paragraphLines.push(line);
+  }
+
+  if (inCode) {
+    blocks.push(`<pre><code>${escapeHtml(codeLines.join("\n"))}</code></pre>`);
+  }
+
+  closeOpenBlocks();
+  return blocks.join("\n");
+}
+
 function setupSearch(inputId, data, containerId, kind = "generic") {
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -178,6 +329,16 @@ function loadProjectsData() {
     .catch(() => projects);
 }
 
+function loadQuranicData() {
+  return fetch("assets/data/quranic_notes.json")
+    .then((response) => {
+      if (!response.ok) throw new Error("Could not load quranic notes JSON");
+      return response.json();
+    })
+    .then((data) => (Array.isArray(data) ? data : tafseerCollections))
+    .catch(() => tafseerCollections);
+}
+
 function findItemById(items, id) {
   const target = String(id || "");
   return (items || []).find((item) => {
@@ -202,12 +363,7 @@ function renderDetailView(kind, item) {
   }
 
   const text = item.content || item.details || item.summary || "";
-  const paragraphs = String(text)
-    .split("\n")
-    .map((p) => p.trim())
-    .filter(Boolean)
-    .map((p) => `<p>${p}</p>`)
-    .join("");
+  const renderedContent = markdownToHtml(text);
 
   const tags = (item.tags || [])
     .map((tag) => `<span class="tag">${tag}</span>`)
@@ -220,7 +376,7 @@ function renderDetailView(kind, item) {
       <h1>${item.title}</h1>
       <p class="lead slim">${item.summary || ""}</p>
       <div class="tags">${tags}</div>
-      <section class="detail-content">${paragraphs}</section>
+      <section class="detail-content">${renderedContent}</section>
       <div class="detail-actions">
         <a class="text-link" href="${kind === "project" ? "projects.html" : "articles.html"}">← Back to ${kind === "project" ? "projects" : "articles"}</a>
         ${item.link && item.link !== "#" ? `<a class="text-link" target="_blank" rel="noopener noreferrer" href="${item.link}">Open external resource →</a>` : ""}
@@ -260,17 +416,18 @@ function bootArticlesPage(articlesData) {
   setupSearch("article-search", articlesData, "articles-grid", "article");
 }
 
-function bootQuranicPage() {
-  renderItems("tafseer-grid", tafseerCollections, "generic");
+function bootQuranicPage(quranicData) {
+  renderItems("tafseer-grid", quranicData, "generic");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   setYear();
   setupMobileNav();
   const projectsData = await loadProjectsData();
+  const quranicData = await loadQuranicData();
   const hasRecentArticleSection = bootHomePage(projectsData);
   bootProjectsPage(projectsData);
-  bootQuranicPage();
+  bootQuranicPage(quranicData);
   await bootDetailPage();
 
   const hasArticlesPage = document.getElementById("articles-grid") !== null;

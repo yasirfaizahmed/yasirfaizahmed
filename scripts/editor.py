@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Local Medium-like editor for adding/editing/deleting articles and projects.
+"""Local Medium-like editor for adding/editing/deleting articles, projects, and Quranic notes.
 
 Run:
-  python3 scripts/add_article.py
+  python3 scripts/editor.py
 
 Open:
   http://127.0.0.1:8787/editor
@@ -37,7 +37,9 @@ def data_file_for_kind(kind: str) -> Path:
         return ROOT / "assets" / "data" / "articles.json"
     if kind == "project":
         return ROOT / "assets" / "data" / "projects.json"
-    raise ValueError("kind must be article or project")
+    if kind == "quranic":
+        return ROOT / "assets" / "data" / "quranic_notes.json"
+    raise ValueError("kind must be article, project, or quranic")
 
 
 def ensure_json_array(path: Path) -> list:
@@ -73,7 +75,7 @@ def list_entries(kind: str) -> list[dict]:
                 "id": item.get("id", ""),
                 "title": item.get("title", ""),
                 "summary": item.get("summary", ""),
-                "body": item.get("content", item.get("details", "")),
+                "body": item.get("content", item.get("details", item.get("summary", ""))),
                 "tags": ", ".join(item.get("tags", [])),
                 "category": item.get("category", ""),
                 "link": item.get("link", "#"),
@@ -86,7 +88,7 @@ def list_entries(kind: str) -> list[dict]:
 
 def persist_entry(payload: dict) -> dict:
     kind = str(payload.get("kind", "article")).strip().lower()
-    if kind not in {"article", "project"}:
+    if kind not in {"article", "project", "quranic"}:
         raise ValueError("Invalid kind")
 
     title = str(payload.get("title", "")).strip()
@@ -138,7 +140,7 @@ def persist_entry(payload: dict) -> dict:
 def delete_entry(payload: dict) -> dict:
     kind = str(payload.get("kind", "")).strip().lower()
     entry_id = str(payload.get("id", "")).strip()
-    if kind not in {"article", "project"} or not entry_id:
+    if kind not in {"article", "project", "quranic"} or not entry_id:
         raise ValueError("kind and id are required")
 
     file_path = data_file_for_kind(kind)
@@ -200,6 +202,8 @@ def editor_page() -> str:
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="/icons/tab_icon.jpg" />
+  <link rel="icon" type="image/png" href="/icons/tab_icon.png" />
   <title>Editor</title>
   <style>
     :root { --ink:#242424; --muted:#6b6b6b; --line:#e6e6e6; --bg:#fff; --green:#1a8917; }
@@ -242,6 +246,7 @@ def editor_page() -> str:
         <select id="kind" class="kind" aria-label="content type">
           <option value="article">Article</option>
           <option value="project">Project</option>
+          <option value="quranic">Quranic Note</option>
         </select>
         <button id="newBtn" class="action-btn" type="button">New</button>
         <button id="saveBtn" class="save-btn" type="button">Save</button>
@@ -279,7 +284,11 @@ def editor_page() -> str:
         <input id="thumb" type="file" accept="image/*" />
         <img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" />
       </div>
-      <textarea id="body" class="body" placeholder="Write detailed content with multiple paragraphs..."></textarea>
+      <label for="body" style="margin-top:16px;display:block;color:#6b6b6b;font:500 0.8rem Inter, system-ui, sans-serif;">Body (Markdown supported)</label>
+      <textarea id="body" class="body" placeholder="# Heading\n\nWrite in markdown: **bold**, *italic*, - list item, [link](https://example.com)"></textarea>
+      <p style="margin-top:8px;color:#6b6b6b;font:400 0.78rem/1.45 Inter,system-ui,sans-serif;">
+        Supported in detail page: headings (#), bold/italic, bullet lists, blockquotes, inline code, horizontal rules, and links.
+      </p>
     </section>
 
     <aside class="card">
