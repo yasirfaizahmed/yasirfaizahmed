@@ -200,7 +200,7 @@ def editor_page() -> str:
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medium Style Editor</title>
+  <title>Editor</title>
   <style>
     :root { --ink:#242424; --muted:#6b6b6b; --line:#e6e6e6; --bg:#fff; --green:#1a8917; }
     * { box-sizing:border-box; }

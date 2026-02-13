@@ -1,6 +1,4 @@
-# MLOps & Spiritual Portfolio (GitHub Pages)
-
-A professional, responsive portfolio website designed for an **MLOps Engineer** with a refined Islamic-spiritual visual touch.
+# Portfolio
 
 ## Structure
 
