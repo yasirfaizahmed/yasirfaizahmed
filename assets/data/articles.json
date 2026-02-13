@@ -1,10 +1,25 @@
 [
   {
+    "id": "test",
+    "title": "test",
+    "summary": "testst",
+    "tags": [],
+    "link": "#",
+    "image": "assets/images/articles/screenshot-from-2026-02-13-21-07-07.png",
+    "imageAlt": "",
+    "category": "Technical",
+    "content": "werasdf wersadf"
+  },
+  {
     "id": "notebook-to-reliable-ml-system",
     "title": "From Notebook to Reliable ML System: A Pragmatic MLOps Checklist",
     "summary": "A practical framework for reproducibility, deployment safety, and model governance.",
     "content": "This article walks through a practical production-first MLOps checklist.\n\nIt covers reproducibility, release discipline, observability, and governance.\n\nUse it as a baseline when moving from experimentation to stable production systems.",
-    "tags": ["MLOps", "Production", "Governance"],
+    "tags": [
+      "MLOps",
+      "Production",
+      "Governance"
+    ],
     "category": "Technical",
     "link": "#",
     "image": "assets/images/articles/mlops-phasen.jpg",
@@ -15,7 +30,11 @@
     "title": "Transformer Architectures: What Actually Matters in Practice",
     "summary": "A field guide to architectural choices, trade-offs, and deployment implications.",
     "content": "A practical guide to transformer architecture decisions in production contexts.\n\nThe article links model choices to latency, memory, and quality trade-offs for deployment teams.",
-    "tags": ["Transformers", "Deep Learning", "LLMs"],
+    "tags": [
+      "Transformers",
+      "Deep Learning",
+      "LLMs"
+    ],
     "category": "Technical",
     "link": "#",
     "image": "",
@@ -26,7 +45,11 @@
     "title": "Evaluating LLM Systems Beyond Benchmark Scores",
     "summary": "Designing robust evaluation pipelines with domain metrics and failure taxonomy.",
     "content": "Benchmark scores are useful but incomplete.\n\nThis article introduces layered evaluation workflows with domain metrics, failure taxonomy, and human review loops.",
-    "tags": ["LLM Evaluation", "Reliability", "AI Safety"],
+    "tags": [
+      "LLM Evaluation",
+      "Reliability",
+      "AI Safety"
+    ],
     "category": "Technical",
     "link": "#",
     "image": "",
@@ -37,7 +60,11 @@
     "title": "Knowledge, Intention, and Responsibility in Engineering",
     "summary": "A reflection on niyyah, accountability, and ihsān in modern technical work.",
     "content": "A reflective essay on intention, accountability, and excellence in technical craft.\n\nIt explores how value-centered engineering can strengthen trust and long-term impact.",
-    "tags": ["Ethics", "Islamic Thought", "Professional Conduct"],
+    "tags": [
+      "Ethics",
+      "Islamic Thought",
+      "Professional Conduct"
+    ],
     "category": "Islamic Thought",
     "link": "#",
     "image": "",

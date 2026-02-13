@@ -144,9 +144,9 @@ function setupMobileNav() {
   });
 }
 
-function bootHomePage() {
+function bootHomePage(projectsData) {
   if (document.getElementById("featured-projects")) {
-    renderItems("featured-projects", projects.slice(0, 3), "project");
+    renderItems("featured-projects", projectsData.slice(0, 3), "project");
   }
 
   return document.getElementById("recent-articles") !== null;
@@ -166,6 +166,16 @@ function loadArticlesData() {
     })
     .then((data) => (Array.isArray(data) ? data : articles))
     .catch(() => articles);
+}
+
+function loadProjectsData() {
+  return fetch("assets/data/projects.json")
+    .then((response) => {
+      if (!response.ok) throw new Error("Could not load projects JSON");
+      return response.json();
+    })
+    .then((data) => (Array.isArray(data) ? data : projects))
+    .catch(() => projects);
 }
 
 function findItemById(items, id) {
@@ -229,7 +239,8 @@ async function bootDetailPage() {
   const kind = type === "project" ? "project" : "article";
 
   if (kind === "project") {
-    const item = findItemById(projects, id);
+    const projectsData = await loadProjectsData();
+    const item = findItemById(projectsData, id);
     renderDetailView("project", item);
     return;
   }
@@ -239,9 +250,9 @@ async function bootDetailPage() {
   renderDetailView("article", item);
 }
 
-function bootProjectsPage() {
-  renderItems("projects-grid", projects, "project");
-  setupSearch("project-search", projects, "projects-grid", "project");
+function bootProjectsPage(projectsData) {
+  renderItems("projects-grid", projectsData, "project");
+  setupSearch("project-search", projectsData, "projects-grid", "project");
 }
 
 function bootArticlesPage(articlesData) {
@@ -256,8 +267,9 @@ function bootQuranicPage() {
 document.addEventListener("DOMContentLoaded", async () => {
   setYear();
   setupMobileNav();
-  const hasRecentArticleSection = bootHomePage();
-  bootProjectsPage();
+  const projectsData = await loadProjectsData();
+  const hasRecentArticleSection = bootHomePage(projectsData);
+  bootProjectsPage(projectsData);
   bootQuranicPage();
   await bootDetailPage();
 
