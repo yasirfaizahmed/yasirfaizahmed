@@ -20,6 +20,8 @@ A professional, responsive portfolio website designed for an **MLOps Engineer** 
     ├── images
     │   └── articles
     │       └── .gitkeep
+    ├── videos
+    │   └── .gitkeep
     ├── js
     │   ├── content.js
     │   └── main.js
@@ -76,6 +78,15 @@ If you don't want an image, just skip `--image` and `--image-alt`.
 - For best results, provide these fields in `assets/data/articles.json` entries:
   - `id` (stable slug)
   - `content` (full article body text)
+
+## Hero background video (cinematic)
+
+- Put your video file at: `assets/videos/hero-bg.mp4`
+- Keep it short + compressed (`.mp4`, H.264) for fast GitHub Pages loading
+- The design already applies layered overlays:
+  - top is more opaque for text clarity
+  - bottom is darker for cinematic depth
+  - color accents are tuned away from cyan to a warmer tone matching dynamic footage
 
 ## Local preview
 
