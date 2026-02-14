@@ -86,6 +86,29 @@ def list_entries(kind: str) -> list[dict]:
     return out
 
 
+def compose_body_from_additions(kind: str, additions: list[dict]) -> str:
+    blocks: list[str] = []
+    for raw in additions:
+        if not isinstance(raw, dict):
+            continue
+        block_type = str(raw.get("type", "")).strip().lower()
+        if block_type == "paragraph":
+            text = str(raw.get("text", "")).strip()
+            if text:
+                blocks.append(text)
+            continue
+        if block_type == "image":
+            image_path = str(raw.get("imagePath", "")).strip()
+            image_data = str(raw.get("imageData", "")).strip()
+            image_name = str(raw.get("imageName", "inline-image")).strip() or "inline-image"
+            image_alt = str(raw.get("imageAlt", "")).strip()
+            if image_data:
+                image_path = save_image(kind, image_name, image_data)
+            if image_path:
+                blocks.append(f"![{image_alt}]({image_path})")
+    return "\n\n".join(blocks).strip()
+
+
 def persist_entry(payload: dict) -> dict:
     kind = str(payload.get("kind", "article")).strip().lower()
     if kind not in {"article", "project", "quranic"}:
@@ -94,8 +117,12 @@ def persist_entry(payload: dict) -> dict:
     title = str(payload.get("title", "")).strip()
     about = str(payload.get("about", "")).strip()
     body = str(payload.get("body", "")).strip()
+    additions = payload.get("additions", [])
+    if isinstance(additions, list) and additions:
+        body = compose_body_from_additions(kind, additions)
+
     if not title or not about or not body:
-        raise ValueError("title, about, and body are required")
+        raise ValueError("title, about, and at least one content block are required")
 
     original_id = str(payload.get("originalId", "")).strip()
     entry_id = slugify(title)
@@ -197,7 +224,7 @@ def deploy_to_main(payload: dict) -> dict:
 
 
 def editor_page() -> str:
-    return """<!doctype html>
+    return r"""<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -224,6 +251,15 @@ def editor_page() -> str:
     .title { width:100%; border:none; outline:none; font:700 clamp(2rem, 3vw, 2.8rem)/1.2 Inter, system-ui, sans-serif; margin:8px 0 14px; }
     .about { border:none; border-left:3px solid var(--line); border-radius:0; outline:none; padding:0 0 0 12px; min-height:80px; resize:vertical; color:#4f4f4f; font:500 1.02rem/1.55 Inter, system-ui, sans-serif; }
     .body { margin-top:22px; border:none; outline:none; min-height:420px; resize:vertical; font:400 1.16rem/1.9 Charter, "Times New Roman", serif; }
+    .additions-bar { margin-top:20px; display:flex; gap:10px; align-items:center; }
+    .additions-select { border:1px solid var(--line); border-radius:999px; padding:8px 12px; font:500 0.86rem Inter, system-ui, sans-serif; background:#fff; }
+    .additions-btn { border:1px solid var(--line); background:#fff; border-radius:999px; padding:8px 12px; font:500 0.84rem Inter, system-ui, sans-serif; cursor:pointer; }
+    .additions-list { margin-top:14px; display:grid; gap:12px; }
+    .addition-block { border:1px solid var(--line); border-radius:10px; padding:12px; background:#fff; }
+    .addition-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .addition-title { font:600 0.85rem Inter, system-ui, sans-serif; color:#3c3c3c; text-transform:capitalize; }
+    .remove-block { border:1px solid #ffd8d8; color:#b71c1c; background:#fff; border-radius:999px; padding:4px 10px; font:500 0.76rem Inter, system-ui, sans-serif; cursor:pointer; }
+    .addition-image-preview { margin-top:10px; width:100%; max-height:220px; object-fit:cover; border-radius:8px; display:none; }
     .thumb-wrap { margin-top:16px; border:1px dashed var(--line); border-radius:10px; padding:12px; }
     .thumb-preview { margin-top:10px; width:100%; max-height:180px; object-fit:cover; border-radius:8px; display:none; }
     .status { margin-top:12px; font:500 0.88rem Inter, system-ui, sans-serif; }
@@ -284,10 +320,17 @@ def editor_page() -> str:
         <input id="thumb" type="file" accept="image/*" />
         <img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" />
       </div>
-      <label for="body" style="margin-top:16px;display:block;color:#6b6b6b;font:500 0.8rem Inter, system-ui, sans-serif;">Body (Markdown supported)</label>
-      <textarea id="body" class="body" placeholder="# Heading\n\nWrite in markdown: **bold**, *italic*, - list item, [link](https://example.com)"></textarea>
+      <div class="additions-bar">
+        <select id="additionType" class="additions-select" aria-label="Add content block">
+          <option value="paragraph">New paragraph</option>
+          <option value="image">Add image</option>
+        </select>
+        <button id="addBlockBtn" class="additions-btn" type="button">Add</button>
+      </div>
+      <div id="additions" class="additions-list"></div>
+      <textarea id="body" class="body" style="display:none" aria-hidden="true"></textarea>
       <p style="margin-top:8px;color:#6b6b6b;font:400 0.78rem/1.45 Inter,system-ui,sans-serif;">
-        Supported in detail page: headings (#), bold/italic, bullet lists, blockquotes, inline code, horizontal rules, and links.
+        Add multiple paragraphs and images in order. Images render in detail view using markdown syntax.
       </p>
     </section>
 
@@ -298,13 +341,161 @@ def editor_page() -> str:
   </main>
 
   <script>
-    const state = { originalId: "", imageData: "", imageName: "" };
+    const state = { originalId: "", imageData: "", imageName: "", additions: [], nextAdditionId: 1 };
     const byId = (id) => document.getElementById(id);
     const statusNode = byId("status");
 
     function setStatus(msg, kind = "") {
       statusNode.className = `status ${kind}`.trim();
       statusNode.textContent = msg;
+    }
+
+    function createAddition(type, data = {}) {
+      const addition = {
+        id: state.nextAdditionId++,
+        type,
+        text: "",
+        imagePath: "",
+        imageAlt: "",
+        imageData: "",
+        imageName: "",
+      };
+      Object.assign(addition, data || {});
+      return addition;
+    }
+
+    function parseBodyToAdditions(bodyText) {
+      const source = String(bodyText || "").trim();
+      if (!source) return [];
+      const chunks = source.split(/\n\s*\n+/).map((part) => part.trim()).filter(Boolean);
+      const out = [];
+      chunks.forEach((chunk) => {
+        const imageMatch = chunk.match(/^!\[(.*?)\]\((.*?)\)$/s);
+        if (imageMatch) {
+          out.push(createAddition("image", { imageAlt: imageMatch[1] || "", imagePath: imageMatch[2] || "" }));
+        } else {
+          out.push(createAddition("paragraph", { text: chunk }));
+        }
+      });
+      return out;
+    }
+
+    function renderAdditions() {
+      const container = byId("additions");
+      container.innerHTML = "";
+      state.additions.forEach((block) => {
+        const card = document.createElement("div");
+        card.className = "addition-block";
+
+        const head = document.createElement("div");
+        head.className = "addition-head";
+        const title = document.createElement("div");
+        title.className = "addition-title";
+        title.textContent = block.type === "image" ? "Image" : "Paragraph";
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "remove-block";
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", () => {
+          state.additions = state.additions.filter((x) => x.id !== block.id);
+          renderAdditions();
+        });
+        head.appendChild(title);
+        head.appendChild(removeBtn);
+        card.appendChild(head);
+
+        if (block.type === "paragraph") {
+          const area = document.createElement("textarea");
+          area.placeholder = "Write paragraph...";
+          area.style.minHeight = "120px";
+          area.value = block.text || "";
+          area.addEventListener("input", (e) => {
+            block.text = e.target.value;
+          });
+          card.appendChild(area);
+        } else {
+          const altLabel = document.createElement("label");
+          altLabel.textContent = "Image alt text";
+          const altInput = document.createElement("input");
+          altInput.type = "text";
+          altInput.placeholder = "Describe image";
+          altInput.value = block.imageAlt || "";
+          altInput.addEventListener("input", (e) => {
+            block.imageAlt = e.target.value;
+          });
+
+          const pathLabel = document.createElement("label");
+          pathLabel.textContent = "Or existing image path";
+          const pathInput = document.createElement("input");
+          pathInput.type = "text";
+          pathInput.placeholder = "assets/images/articles/example.jpg";
+          pathInput.value = block.imagePath || "";
+          pathInput.addEventListener("input", (e) => {
+            block.imagePath = e.target.value;
+          });
+
+          const fileLabel = document.createElement("label");
+          fileLabel.textContent = "Upload image";
+          const fileInput = document.createElement("input");
+          fileInput.type = "file";
+          fileInput.accept = "image/*";
+          const preview = document.createElement("img");
+          preview.className = "addition-image-preview";
+          if (block.imageData) {
+            preview.src = block.imageData;
+            preview.style.display = "block";
+          } else if (block.imagePath) {
+            preview.src = block.imagePath;
+            preview.style.display = "block";
+          }
+          fileInput.addEventListener("change", async (e) => {
+            const file = e.target.files && e.target.files[0];
+            block.imageData = "";
+            block.imageName = "";
+            if (!file) return;
+            block.imageName = file.name;
+            const dataUrl = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(String(reader.result || ""));
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+            block.imageData = dataUrl;
+            preview.src = dataUrl;
+            preview.style.display = "block";
+          });
+
+          card.appendChild(altLabel);
+          card.appendChild(altInput);
+          card.appendChild(pathLabel);
+          card.appendChild(pathInput);
+          card.appendChild(fileLabel);
+          card.appendChild(fileInput);
+          card.appendChild(preview);
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function collectAdditionsPayload() {
+      return state.additions
+        .map((block) => {
+          if (block.type === "paragraph") {
+            return { type: "paragraph", text: String(block.text || "").trim() };
+          }
+          return {
+            type: "image",
+            imageAlt: String(block.imageAlt || "").trim(),
+            imagePath: String(block.imagePath || "").trim(),
+            imageData: String(block.imageData || "").trim(),
+            imageName: String(block.imageName || "").trim(),
+          };
+        })
+        .filter((block) => {
+          if (block.type === "paragraph") return !!block.text;
+          return !!(block.imagePath || block.imageData);
+        });
     }
 
     function clearForm() {
@@ -314,6 +505,8 @@ def editor_page() -> str:
       byId("title").value = "";
       byId("about").value = "";
       byId("body").value = "";
+      state.additions = [];
+      state.nextAdditionId = 1;
       byId("tags").value = "";
       byId("category").value = "";
       byId("link").value = "";
@@ -323,6 +516,7 @@ def editor_page() -> str:
       const preview = byId("thumbPreview");
       preview.src = "";
       preview.style.display = "none";
+      renderAdditions();
     }
 
     function fillForm(item) {
@@ -332,6 +526,7 @@ def editor_page() -> str:
       byId("title").value = item.title || "";
       byId("about").value = item.summary || "";
       byId("body").value = item.body || "";
+      state.additions = parseBodyToAdditions(item.body || "");
       byId("tags").value = item.tags || "";
       byId("category").value = item.category || "";
       byId("link").value = item.link || "";
@@ -345,6 +540,7 @@ def editor_page() -> str:
         preview.src = "";
         preview.style.display = "none";
       }
+      renderAdditions();
       setStatus(`Editing: ${item.title}`);
     }
 
@@ -422,15 +618,30 @@ def editor_page() -> str:
       await loadList();
     });
 
+    byId("addBlockBtn").addEventListener("click", () => {
+      const type = byId("additionType").value;
+      if (type === "image") {
+        state.additions.push(createAddition("image"));
+      } else {
+        state.additions.push(createAddition("paragraph"));
+      }
+      renderAdditions();
+    });
+
     byId("saveBtn").addEventListener("click", async () => {
       try {
         setStatus("Saving...");
+        const additions = collectAdditionsPayload();
+        if (!additions.length) {
+          throw new Error("Please add at least one paragraph or image block.");
+        }
         const payload = {
           kind: byId("kind").value,
           originalId: state.originalId,
           title: byId("title").value,
           about: byId("about").value,
           body: byId("body").value,
+          additions,
           tags: byId("tags").value,
           category: byId("category").value,
           link: byId("link").value,
@@ -476,6 +687,7 @@ def editor_page() -> str:
       }
     });
 
+    renderAdditions();
     loadList().catch((err) => setStatus(err.message || String(err), "err"));
   </script>
 </body>
