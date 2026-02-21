@@ -9,12 +9,13 @@
 ├── articles.html
 ├── quranic-notes.html
 ├── detail.html
-├── README.md
 └── assets
     ├── css
     │   └── main.css
     ├── data
-    │   └── articles.json
+    │   ├── articles.json
+    │   ├── projects.json
+    │   └── quranic_notes.json
     ├── images
     │   └── articles
     │       └── .gitkeep
@@ -24,7 +25,7 @@
     │   ├── content.js
     │   └── main.js
 └── scripts
-    └── add_article.py
+    └── editor.py
 ```
 
 ## How to use
@@ -38,36 +39,48 @@
 
 ## Customize content
 
-Edit these arrays in `assets/js/content.js`:
+Primary content source is JSON data files:
+
+- `assets/data/projects.json`
+- `assets/data/articles.json`
+- `assets/data/quranic_notes.json`
+
+Fallback/sample content is also available in `assets/js/content.js` arrays:
 
 - `projects`
 - `articles`
 - `tafseerCollections`
 
-> Note: article pages now load from `assets/data/articles.json` first (with `content.js` as fallback).
+> Note: pages load from JSON first (with `content.js` as fallback).
 
-## Super simple way to add a new article (with image)
+## Super simple way to add content (with image)
 
-1. Put your image in: `assets/images/articles/`
-2. Run this command:
+Use the local editor:
 
 ```bash
-python3 scripts/add_article.py \
-  --title "My New Article" \
-  --summary "Short summary of the article" \
-  --content "Optional long-form content shown on detail page" \
-  --tags "LLM,Transformers,MLOps" \
-  --category "Technical" \
-  --image "assets/images/articles/my-new-article.jpg" \
-  --image-alt "Cover image for my new article"
+python3 scripts/editor.py
 ```
 
-That’s it. The article is added to `assets/data/articles.json` and automatically appears on:
+Then open:
+
+```text
+http://127.0.0.1:8787/editor
+```
+
+From the editor, you can add/edit/delete:
+
+- Articles (`assets/data/articles.json`)
+- Projects (`assets/data/projects.json`)
+- Qur'anic notes (`assets/data/quranic_notes.json`)
+
+Content automatically appears on:
 
 - `articles.html`
-- Home page “Recent Articles” section
+- `projects.html`
+- `quranic-notes.html`
+- Home page featured sections
 
-If you don't want an image, just skip `--image` and `--image-alt`.
+If you don't want an image, leave the image fields empty.
 
 ## Clickable cards and detail pages
 
@@ -79,7 +92,8 @@ If you don't want an image, just skip `--image` and `--image-alt`.
 
 ## Hero background video (cinematic)
 
-- Put your video file at: `assets/videos/hero-bg.mp4`
+- Current page source uses: `assets/videos/bg.mp4`
+- If you prefer `hero-bg.mp4`, rename/update `index.html` accordingly.
 - Keep it short + compressed (`.mp4`, H.264) for fast GitHub Pages loading
 - The design already applies layered overlays:
   - top is more opaque for text clarity
